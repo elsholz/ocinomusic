@@ -1,9 +1,5 @@
 <template>
-  <q-page
-    padding
-    dark
-    class="justify-center flex row items-center"
-  >
+  <q-page padding dark class="justify-center flex row items-center">
     <div class="column col col-lg-6 col-md-8 col-sm-12 q-px-sm text-body1 text-center">
       <div class="row q-pt-md text-white text-center">
         <div class="col-12">
@@ -23,22 +19,10 @@
       <div class="row text-white text-center q-pb-xl">
         <div class="col-12 text-italic">
           Hier findet ihr uns auch:<br />
-          <q-btn
-            round
-            flat
-            padding="sm"
-            size="xl"
-            icon="fa-brands fa-github"
-            href="https://github.com/elsholz/ocinomusic"
-          ></q-btn>
-          <q-btn
-            round
-            flat
-            padding="sm"
-            size="xl"
-            icon="fa-brands fa-instagram"
-            href="https://instagram.com/ocinomusic"
-          ></q-btn>
+          <q-btn round flat padding="sm" size="xl" icon="fa-brands fa-github"
+            href="https://github.com/elsholz/ocinomusic"></q-btn>
+          <q-btn round flat padding="sm" size="xl" icon="fa-brands fa-instagram"
+            href="https://instagram.com/ocinomusic"></q-btn>
         </div>
       </div>
 
@@ -66,11 +50,10 @@
       <div class="row text-white text-center">
         <div class="col-12">Das bin ich, Nico:</div>
       </div>
-      <div class="row text-white">
-        <div class="col-12">
-          <q-avatar square :size="$q.screen.gt.xs ? '450px': '350px'" class="q-ma-sm">
-            <img src="/images/nico1.png" />
-          </q-avatar>
+      <div class="q-col-gutter-md text-white row items-start">
+        <div class="col-12" style="height:500px">
+          <q-img src="/images/ocino_stage.jpeg">
+          </q-img>
         </div>
       </div>
       <div class="row text-white text-center q-mb-xl">

@@ -70,7 +70,11 @@ Resources:
   OcinomusicBucket:
     Type: AWS::S3::Bucket
     Properties:
-      AccessControl: PublicRead
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: ObjectWriter
       BucketName: !FindInMap [EnvMap, !Ref env, Domain]
       Tags:
         - Key: App

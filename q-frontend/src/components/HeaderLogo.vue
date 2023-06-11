@@ -1,47 +1,36 @@
 <template>
   <q-toolbar-title :class="
     $q.screen.gt.xs
-      ? this.absoluteLeft === true
-        ? 'absolute-left'
-        : ''
+      ? 'absolute-left'
       : 'absolute-center'
   ">
-    <q-btn no-caps flat class="text-h6 q-px-xl" to="/" style="height:100px;" id="homebutton">
-      <template v-if="$q.screen.gt.xs">
-        <div style="line-height: 140%" class="text-center">
-          <div class="row">
-            <div class="text-bold q-pt-sm text-h5 q-pl-sm">OCINO MUSIC</div>
-            <div class="text-weight-thin q-pl-lg text-monospace q-pt-sm"
-              style="margin: 0; line-height: 110%; color: #c70">
-            </div>
-          </div>
-        </div>
-      </template>
-      <template v-else>
-        <div class="no-wrap row">
-          <div class="col col-auto q-pt-sm q-pr-sm">
-            <q-avatar square size="md" style="margin: 0; padding: 0">
-              <img src="/icons/favicon-128x128.png" />
-            </q-avatar>
-          </div>
-          <div class="col col-10">
-            <div style="margin-bottom: 0">OCINO MUSIC</div>
-          </div>
-        </div>
-      </template>
+    <q-btn no-caps flat class="text-h6" to="/" style="height:100px; width: 222px;" id="homebutton">
+      <div class="column col-6 q-mb-lg">
+        <q-img src="/images/ocino_logo.png" style="width: 100px" />
+      </div>
+      <div class="column col-6 q-mb-lg">
+        <div class="text-bold q-pt-sm text-h5 q-pl-sm q-mb-sm" style="line-height: 100px; vertical-align: middle;">MUSIC</div>
+      </div>
     </q-btn>
   </q-toolbar-title>
 </template>
 
 <style>
-#homebutton:hover {
+#homebuttonbackground:hover {
   background-size: cover;
   background-position: 50% 10%;
   background-repeat: no-repeat;
-
   background-image: url(/images/ocino_stage.jpeg);
+}
 
-  transition: 1s;
+#homebuttonbackground {
+  position: relative;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: none;
+  transition: all 2s;
+  opacity: 1;
 }
 </style>
 
@@ -50,9 +39,6 @@ export default {
   name: 'HeaderLogo',
   setup () {
     return {}
-  },
-  props: {
-    absoluteLeft: Boolean
   }
 }
 </script>

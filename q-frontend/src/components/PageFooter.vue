@@ -9,7 +9,6 @@
         <!--<q-btn round flat padding="xs" size="lg" icon="fa-brands fa-reddit"></q-btn>-->
       </q-toolbar-title>
 
-      <q-btn no-caps flat class="text-grey-4" to="/me">about me</q-btn>
       <q-btn no-caps flat class="text-grey-4" to="/impressum">impressum</q-btn>
     </q-toolbar>
   </q-footer>

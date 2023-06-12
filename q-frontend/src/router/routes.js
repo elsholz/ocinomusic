@@ -17,13 +17,6 @@ const routes = [
     ]
   },
   {
-    path: '/me',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/MePage.vue') }
-    ]
-  },
-  {
     path: '/impressum',
     component: () => import('layouts/MainLayout.vue'),
     children: [

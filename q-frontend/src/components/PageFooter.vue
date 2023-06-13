@@ -3,7 +3,7 @@
     <q-toolbar>
       <q-toolbar-title>
         <q-btn round flat padding="xs" size="lg" icon="fa-brands fa-github" href="https://github.com/elsholz/ocinomusic"></q-btn>
-        <q-btn round flat padding="xs" size="lg" icon="fa-brands fa-instagram" href="https://instagram.com/ocinomusic"></q-btn>
+        <q-btn round flat padding="xs" size="lg" icon="fa-brands fa-instagram" href="https://instagram.com/itsnicosteger"></q-btn>
         <!--<q-btn round flat padding="xs" size="lg" icon="fa-brands fa-facebook"></q-btn>-->
         <!--<q-btn round flat padding="xs" size="lg" icon="fa-brands fa-btc"></q-btn>-->
         <!--<q-btn round flat padding="xs" size="lg" icon="fa-brands fa-reddit"></q-btn>-->

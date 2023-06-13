@@ -1,10 +1,10 @@
 <template>
   <q-page class="column flex justify-center" :style="`
-                        background-image: url(/images/ocino_stage.jpe);
-                        background-position: center;
-                        background-repeat: no-repeat;
-                                          background-size: ${$q.screen.gt.xs ? $q.screen.gt.sm ? $q.screen.gt.md ? '100%' : '100%' : '100%' : '100%'};
-                                          background-position: ${$q.screen.gt.xs ? 50 : 0}% 50%;`">
+                          background-image: url(/images/ocino_stage.jpe);
+                          background-position: center;
+                          background-repeat: no-repeat;
+                                              background-size: ${$q.screen.gt.xs ? $q.screen.gt.sm ? $q.screen.gt.md ? '100%' : '100%' : '100%' : '100%'};
+                                              background-position: ${$q.screen.gt.xs ? 50 : 0}% 50%;`">
     <div class="row justify-center">
       <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12 items-center">
         <q-parallax src="/images/ocino_stage_1000.jpg" :height="$q.screen.height">
@@ -20,7 +20,8 @@
         <q-parallax src="/images/ocino_portrait_1000.jpg"
           :height="(($q.screen.height > 800) && ($q.screen.width > 480)) ? $q.screen.height : Math.max($q.screen.height, 900) * (480 / Math.min($q.screen.width, 480))">
           <div class="q-mx-sm">
-            <h3>about me.</h3>
+            <span class="text-h3 ">about me.</span>
+            <hr class="q-mb-lg" style="background-color: white; border: none; width: 300px; height: 2px;" />
             <p>
               OCINO is an up and coming singer & songwriter with unique sound and natural talent for crafting memorable
               songs.
@@ -52,16 +53,15 @@
         <q-parallax src="/images/ocino_stage_2_1000.jpg" :height="$q.screen.height">
           <div class="row">
 
-            <div class="col-12 text-h6">Socials</div>
-            <hr style="background-color: white; width: 300px" />
+            <span class="text-h3 col col-12">socials.</span>
+            <hr class="q-mb-lg" style="background-color: white; border: none; width: 300px; height: 2px;" />
           </div>
 
           <div class="row">
             <div class="col-12 text-italic">
-              <q-btn round flat padding="sm" size="xl" icon="fa-brands fa-github"
-                href="https://github.com/elsholz/ocinomusic"></q-btn>
-              <q-btn round flat padding="sm" size="xl" icon="fa-brands fa-instagram"
-                href="https://instagram.com/ocinomusic"></q-btn>
+              <q-btn round flat padding="sm" size="4em" icon="fa-brands fa-instagram"
+                href="https://instagram.com/itsnicosteger">
+              </q-btn>
             </div>
           </div>
         </q-parallax>

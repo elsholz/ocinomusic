@@ -6,7 +6,7 @@ Mappings:
   EnvMap:
     prod:
       Domain: "ocinomusic.com"
-      CertificateArn: ""
+      CertificateArn: "arn:aws:acm:us-east-1:891666753558:certificate/d649cb69-3cd8-443d-a07d-7787f27d7569"
       OriginId: prod-bucket
       Comment: PROD ocinomusic Distro
       OriginAclName: OriginAccessControlProd

@@ -1,0 +1,119 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: S3 bucket for Frontend Deployment
+
+Mappings:
+  EnvMap:
+    prod:
+      Domain: "ocinomusic.com"
+      CertificateArn: "arn:aws:acm:us-east-1:891666753558:certificate/d649cb69-3cd8-443d-a07d-7787f27d7569"
+      OriginId: prod-bucket
+      Comment: PROD ocinomusic Distro
+      OriginAclName: OriginAccessControlProd
+    dev:
+      Domain: "dev.ocinomusic.com"
+      CertificateArn: "arn:aws:acm:us-east-1:891666753558:certificate/64be6059-eecc-4d5a-a6f0-c8b4df26a4fe"
+      OriginId: dev-bucket
+      Comment: Ocinomusic Distro DEV
+      OriginAclName: OriginAccessControlDev
+
+Parameters:
+  env:
+    Type: String
+    Description: Environment of the deployment (Lowercase)
+
+Conditions:
+  # IsStaging: !Equals [!Ref env, dev]
+  IsProd: !Equals [!Ref env, prod]
+
+Resources:
+  OcinomusicCfDistro:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - !FindInMap [EnvMap, !Ref env, Domain]
+        Comment: !FindInMap [EnvMap, !Ref env, Comment]
+        # Staging: !If [IsStaging, false, true]
+        PriceClass: PriceClass_100
+        Enabled: true
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+          Compress: true
+          TargetOriginId: !FindInMap [EnvMap, !Ref env, OriginId]
+          ViewerProtocolPolicy: redirect-to-https
+        CustomErrorResponses:
+          - ErrorCode: 404
+            ResponseCode: "200"
+            ResponsePagePath: "/index.html"
+        Origins:
+          - CustomOriginConfig:
+              OriginProtocolPolicy: "http-only"
+            DomainName: !Join [ '', !Split [ 'http://', !GetAtt OcinomusicBucket.WebsiteURL] ]
+            Id: !FindInMap [EnvMap, !Ref env, OriginId]
+        ViewerCertificate:
+          AcmCertificateArn: !FindInMap [EnvMap, !Ref env, CertificateArn]
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: sni-only
+        DefaultRootObject: index.html
+      Tags:
+        - Key: App
+          Value: ocinomusic
+        - Key: Environment
+          Value: !Ref env
+  OcinomusicBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: ObjectWriter
+      BucketName: !FindInMap [EnvMap, !Ref env, Domain]
+      Tags:
+        - Key: App
+          Value: ocinomusic
+        - Key: Environment
+          Value: !Ref env
+      WebsiteConfiguration:
+        IndexDocument: index.html
+
+  BucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      PolicyDocument:
+        Id: ocinomusicPublicReadPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Join
+              - ""
+              - - "arn:aws:s3:::"
+                - !Ref OcinomusicBucket
+                - /*
+      Bucket: !Ref OcinomusicBucket
+
+  OcinomusicDNSEntry:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: "ocinomusic.com."
+      Comment: Alias for CF Distro
+      Name: !FindInMap [EnvMap, !Ref env, Domain]
+      Type: A
+      AliasTarget:
+        HostedZoneId: "Z2FDTNDATAQYW2"
+        DNSName: !Join ['cloudfront.net', !Split ['cloudfront.net.', !GetAtt OcinomusicCfDistro.DomainName]]
+
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt OcinomusicBucket.WebsiteURL
+    Description: URL for website hosted on S3

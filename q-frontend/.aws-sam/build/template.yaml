@@ -1,0 +1,97 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: S3 bucket for Frontend Deployment
+Mappings:
+  EnvMap:
+    prod:
+      BucketName: metroplanner-frontend-prod
+      Domain: ich-hab-plan.de
+      CertificateArn: arn:aws:acm:eu-central-1:891666753558:certificate/8e107838-0e72-47c5-bd60-39b4ffee4dc3
+      OriginId: prod-bucket
+    dev:
+      BucketName: metroplanner-frontend-dev
+      Domain: dev.ich-hab-plan.de
+      CertificateArn: arn:aws:acm:eu-central-1:891666753558:certificate/db85db90-10c6-4f2d-9144-f55a2ec33031
+      OriginId: dev-bucket
+Parameters:
+  env:
+    Type: String
+    Description: Environment of the deployment (Lowercase)
+Resources:
+  MetroplannerCfDistro:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+        - ich-hab-plan.de
+        Staging:
+          Fn::If:
+          - Fn::Equals:
+            - Ref: env
+            - prod
+          - false
+          - true
+        PriceClass: PriceClass_100
+        Origins:
+        - CustomOriginConfig:
+            OriginSSLProtocols:
+            - Fn::FindInMap:
+              - EnvMap
+              - Ref: env
+              - CertificateArn
+          DomainName:
+            Ref: WebsiteURL
+          Id:
+            Fn::FindInMap:
+            - EnvMap
+            - Ref: env
+            - OriginId
+      Tags:
+      - Key: App
+        Value: metroplanner
+      - Key: Environment
+        Value:
+          Ref: env
+  MetroplannerBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName:
+        Fn::FindInMap:
+        - EnvMap
+        - Ref: env
+        - BucketName
+      Tags:
+      - Key: App
+        Value: metroplanner
+      - Key: Environment
+        Value:
+          Ref: env
+      WebsiteConfiguration:
+        IndexDocument: index.html
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      PolicyDocument:
+        Id: metroplannerPublicReadPolicy
+        Version: 2012-10-17
+        Statement:
+        - Sid: PublicReadForGetBucketObjects
+          Effect: Allow
+          Principal: '*'
+          Action: s3:GetObject
+          Resource:
+            Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - Ref: MetroplannerBucket
+              - /*
+      Bucket:
+        Ref: MetroplannerBucket
+Outputs:
+  WebsiteURL:
+    Value:
+      Fn::GetAtt:
+      - MetroplannerBucket
+      - WebsiteURL
+    Description: URL for website hosted on S3

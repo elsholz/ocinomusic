@@ -1,15 +1,8 @@
 <template>
-  <q-toolbar-title :class="
-    $q.screen.gt.xs
-      ? 'absolute-left'
-      : 'absolute-center'
-  ">
+  <q-toolbar-title class="absolute-center">
     <q-btn no-caps flat class="text-h6" to="/" style="height:100px; width: 222px;" id="homebutton">
-      <div class="column col-6 q-mb-lg">
-        <q-img src="/images/ocino_logo.png" style="width: 100px" />
-      </div>
-      <div class="column col-6 q-mb-lg">
-        <div class="text-bold q-pt-sm text-h5 q-pl-sm q-mb-sm" style="line-height: 100px; vertical-align: middle;">MUSIC</div>
+      <div class="column col-12 items-center">
+        <q-img src="/images/ocino_logo.png" style="width: 150px" />
       </div>
     </q-btn>
   </q-toolbar-title>

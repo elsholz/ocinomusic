@@ -1,11 +1,10 @@
 <template>
-  <q-page class="column flex justify-center"
-    :style="`
-      background-image: url(/images/ocino_stage.jpe);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: ${$q.screen.gt.xs ? $q.screen.gt.sm ? $q.screen.gt.md ? '100%' : '100%' : '100%' : '100%'};
-      background-position: ${$q.screen.gt.xs ? 50 : 0}% 50%;`">
+  <q-page class="column flex justify-center" :style="`
+                        background-image: url(/images/ocino_stage.jpe);
+                        background-position: center;
+                        background-repeat: no-repeat;
+                                          background-size: ${$q.screen.gt.xs ? $q.screen.gt.sm ? $q.screen.gt.md ? '100%' : '100%' : '100%' : '100%'};
+                                          background-position: ${$q.screen.gt.xs ? 50 : 0}% 50%;`">
     <div class="row justify-center">
       <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12 items-center">
         <q-parallax src="/images/ocino_stage_1000.jpg" :height="$q.screen.height">
@@ -19,7 +18,7 @@
     <div class="row text-white text-h6 justify-center text-center">
       <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12">
         <q-parallax src="/images/ocino_portrait_1000.jpg"
-          :height="$q.screen.height > $q.screen.width ? $q.screen.height * Math.sqrt($q.screen.height / $q.screen.width) : $q.screen.height">
+          :height="(($q.screen.height > 800) && ($q.screen.width > 480)) ? $q.screen.height : Math.max($q.screen.height, 900) * (480 / Math.min($q.screen.width, 480))">
           <div class="q-mx-sm">
             <h3>about me.</h3>
             <p>
@@ -73,9 +72,15 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: 'IndexPage',
+  setup: function () {
+    const $q = useQuasar()
+    console.log($q.screen.width, $q.screen.height)
+    return {}
+  },
   data () {
     return {
     }

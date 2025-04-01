@@ -1,16 +1,32 @@
 <template>
-  <q-page class="column flex justify-center" :style="`
-                          background-image: url(/images/ocino_stage.jpe);
+  <q-page class="column flex justify-center">
+  <!--:style="`
+                          background-image: url(/images/ocino_stage.jpeg);
                           background-position: center;
                           background-repeat: no-repeat;
                                               background-size: ${$q.screen.gt.xs ? $q.screen.gt.sm ? $q.screen.gt.md ? '100%' : '100%' : '100%' : '100%'};
-                                              background-position: ${$q.screen.gt.xs ? 50 : 0}% 50%;`">
+                                              background-position: ${$q.screen.gt.xs ? 50 : 0}% 50%;`">-->
     <div class="row justify-center">
       <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12 items-center">
         <q-parallax src="/images/ocino_stage_1000.jpg" :height="$q.screen.height">
-          <q-img src="/images/ocino_logo.png">
-
-          </q-img>
+          <div class="row full-width justify-center">
+            <!--<div class="column col-4">
+              <q-img src="/images/ocino_logo.png" sty>
+              </q-img>
+            </div>-->
+            <div class="column col-10">
+              <iframe
+                style="border-radius:12px; opacity: 0.9;"
+                src="https://open.spotify.com/embed/album/1xKMLqhapIc0vSoomSoAch?utm_source=generator"
+                width="100%"
+                :height="Math.min(512, $q.screen.height * .6)"
+                frameBorder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy">
+              </iframe>
+            </div>
+          </div>
         </q-parallax>
       </div>
     </div>

@@ -8,9 +8,13 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-const { configure } = require('quasar/wrappers')
+import { defineConfig } from '#q-app/wrappers'
 
-module.exports = configure(function (ctx) {
+import { config } from 'dotenv'
+
+
+
+export default defineConfig(function (ctx) {
   const res = {
     eslint: {
       // fix: true,
@@ -56,7 +60,7 @@ module.exports = configure(function (ctx) {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node16'
       },
-      env: require('dotenv').config().parsed,
+      env: config().parsed,
 
       vueRouterMode: 'history' // available values: 'hash', 'history'
       // vueRouterBase,
